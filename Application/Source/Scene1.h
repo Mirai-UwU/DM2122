@@ -1,5 +1,5 @@
-#ifndef SCENE_1_H
-#define SCENE_1_H
+#ifndef SCENE_2_H
+#define SCENE_2_H
 
 #include "Scene.h"
 

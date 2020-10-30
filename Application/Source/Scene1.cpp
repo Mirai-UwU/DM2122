@@ -1,18 +1,18 @@
-#include "Scene1.h"
+#include "Scene2.h"
 #include "GL\glew.h"
 
 #include "shader.hpp"
 
 
-Scene1::Scene1()
+Scene2::Scene2()
 {
 }
 
-Scene1::~Scene1()
+Scene2::~Scene2()
 {
 }
 
-void Scene1::Init()
+void Scene2::Init()
 {
 	// Init VBO here
 	// Set background color to dark blue
@@ -183,11 +183,11 @@ void Scene1::Init()
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Scene1::Update(double dt)
+void Scene2::Update(double dt)
 {
 }
 
-void Scene1::Render()
+void Scene2::Render()
 {
 	// Render VBO here
 	// Clear color & depth buffer everty frame
@@ -230,7 +230,7 @@ void Scene1::Render()
 	glDisableVertexAttribArray(1); */
 }
 
-void Scene1::Exit()
+void Scene2::Exit()
 {
 	// Cleanup VBO here
 	glDeleteBuffers(NUM_GEOMETRY, &m_vertexBuffer[0]);
