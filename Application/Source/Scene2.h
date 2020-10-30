@@ -1,9 +1,9 @@
-#ifndef SCENE_1_H
-#define SCENE_1_H
+#ifndef SCENE_2_H
+#define SCENE_2_H
 
 #include "Scene.h"
 
-class Scene1 : public Scene
+class Scene2 : public Scene
 {
 enum GEOMETRY_TYPE
 {
@@ -13,8 +13,8 @@ enum GEOMETRY_TYPE
 };
 
 public:
-	Scene1();
-	~Scene1();
+	Scene2();
+	~Scene2();
 
 	virtual void Init();
 	virtual void Update(double dt);
