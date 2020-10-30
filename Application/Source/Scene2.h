@@ -5,6 +5,21 @@
 
 class Scene2 : public Scene
 {
+	float rotateAngle;
+	float translateX;
+	float scaleAll;
+
+
+
+enum UNIFORM_TYPE
+{
+	U_MVP = 0,
+	U_TOTAL,
+};
+
+unsigned m_parameters[U_TOTAL];
+
+
 enum GEOMETRY_TYPE
 {
 	GEO_TRIANGLE_1 = 0,

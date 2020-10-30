@@ -44,10 +44,18 @@ Application::~Application()
 {
 }
 
+void resize_callback(GLFWwindow* window, int w, int h)
+{
+	glViewport(0, 0, w, h); //update opengl the new window size
+}
+
+
 void Application::Init()
 {
 	//Set the error callback
+	glfwSetWindowSizeCallback(m_window, resize_callback);
 	glfwSetErrorCallback(error_callback);
+	
 
 	//Initialize GLFW
 	if (!glfwInit())
