@@ -1,5 +1,6 @@
 #include "Scene2.h"
 #include "GL\glew.h"
+#include "Application.h"
 
 #include "shader.hpp"
 #include <Mtx44.h>
@@ -16,8 +17,8 @@ Scene2::~Scene2()
 void Scene2::Init()
 {
 	rotateAngle = 0;
-	translateX = 0;
-	scaleAll = 0;
+	translateX = 8;
+	scaleAll = 8;
 
 	m_programID = LoadShaders("Shader//TransformVertexShader.vertexshader", "Shader//SimpleFragmentShader.fragmentshader");
 	// Use our shader
@@ -196,14 +197,29 @@ void Scene2::Init()
 
 void Scene2::Update(double dt)
 {
-	rotateAngle += (float)(10 * dt);
-	translateX += (float)(10 * dt);
-	scaleAll += (float)(2 * dt);
+	rotateAngle -= (float)(10 * dt);
+	translateX -= (float)(10 * dt);
+	scaleAll -= (float)(2 * dt);
 
-	if (scaleAll >= 10)
+	if (Application::IsKeyPressed(VK_SPACE))
 	{
-		scaleAll = -1;
+		if (scaleAll >= -100)
+		{
+			scaleAll = 1;
+		}
+
+		if (rotateAngle >= -90)
+		{
+			rotateAngle = 1;
+		}
+
+		if (translateX >= -100)
+		{
+			translateX = 8;
+		}
+			
 	}
+
 }
 
 void Scene2::Render()
@@ -224,9 +240,9 @@ void Scene2::Render()
 	view.SetToIdentity();
 	projection.SetToOrtho(-8, +8, -8, +8, -8, +8);
 
-	scale.SetToScale(1, 1, 1);
+	scale.SetToScale(4, 4, 4);
 	rotate.SetToRotation(rotateAngle, 0, 0, 1);
-	translate.SetToTranslation(3, 3, 3);
+	translate.SetToTranslation(3, translateX, 3);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -263,7 +279,7 @@ void Scene2::Render()
 	//OBJECT 2
 	scale.SetToScale(1, 1, 1);
 	rotate.SetToRotation(135, 0, 0, 1);
-	translate.SetToTranslation(translateX, -3, 3);
+	translate.SetToTranslation(translateX, 6, 3);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -279,7 +295,7 @@ void Scene2::Render()
 	//3rd object
 	scale.SetToScale(scaleAll, scaleAll, scaleAll);
 	rotate.SetToRotation(135, 0, 0, 1);
-	translate.SetToTranslation(-5, -5, -5);
+	translate.SetToTranslation(0, -4, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
