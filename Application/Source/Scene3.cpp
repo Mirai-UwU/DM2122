@@ -1,4 +1,4 @@
-#include "Scene2.h"
+#include "Scene3.h"
 #include "GL\glew.h"
 #include "Application.h"
 
@@ -6,15 +6,15 @@
 #include <Mtx44.h>
 
 
-Scene2::Scene2()
+Scene3::Scene3()
 {
 }
 
-Scene2::~Scene2()
+Scene3::~Scene3()
 {
 }
 
-void Scene2::Init()
+void Scene3::Init()
 {
 	rotateAngle = 0;
 	translateX = 8;
@@ -28,8 +28,8 @@ void Scene2::Init()
 	m_parameters[U_MVP] = glGetUniformLocation(m_programID, "MVP");
 	// Init VBO here
 	// Set background color to dark blue
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-	
+	glClearColor(0.2f, 0.5f, 0.4f, 0.0f);
+
 	//Generate a default VAO for now
 	glGenVertexArrays(1, &m_vertexArrayID);
 	glBindVertexArray(m_vertexArrayID);
@@ -41,63 +41,10 @@ void Scene2::Init()
 	//An array of 3 vectors which represents 3 vertices 
 	static const GLfloat vertex_buffer_data[] =
 	{
-		/*1.0f,0.0f,0.0f,
-		0.707f,0.707f,0.0f,
-		0.0f,1.0f,0.0f,
-		-0.707f,0.707f,0.0f,
-		-1.0f,0.0f,0.0f,
-		-0.707f,-0.707f,0.0f,
-		0.0f,-1.0f,0.0f,
-		0.707f,-0.707f,0.0f,
-		1.0f,0.0f,0.0f,*/
-		
 
-
-		
-		0.0f,0.4f,0.0f,
-		0.1f,0.2f,0.0f,
-		-0.1f,0.2f,0.0f,
-		0.1f,0.2f,0.0f,
-		0.1f,-0.1f,0.0f,
-		0.3f,0.0f,0.0f,		
-		0.1f,-0.1f,0.0f,
-		0.2f,-0.3f,0.0f,
-		0.0f,-0.2f,0.0f,
-		0.0f,-0.2f,0.0f,
-		-0.2f,-0.3f,0.0f,
-		-0.1f,-0.1f,0.0f,
-		-0.1f,-0.1f,0.0f,
-		-0.1f,0.2f,0.0f,
-		-0.3f,0.0f,0.0f,
-
-
-
-		
-
-	/*	part 3 answer
-		-0.8f,0.2f,0.0f,
-		-0.8f,0.0f,0.0f,
-		0.8f,0.2f,0.0f,
-
-		0.8f,0.0f,0.0f,
-		0.8f,0.2f,0.0f,
-		-0.8f,0.0f,0.0f,
-
-		-0.8f,0.2f,0.0f,
-		-0.2f,0.04f,0.0f,
-		0.2f,0.4f,0.0f,
-
-		0.2f,0.4f,0.0f,
-		0.8f,0.2f,0.0f,
-		-0.8f,0.2f,0.0f
-
-		-0.8f,0.0f,0.0f,
-		-0.2f,-0.4f,0.0f,
-		0.8f,0.0f,0.0f,
-
-		-0.2f,-0.4f,0.0f,
-		0.2f,0.4f,0.0f,
-		0.8f,0.0f,0.0f,*/
+		0.0f,0.2f,0.0f,
+		0.1f,0.0f,0.0f,
+		-0.1f,0.0f,0.0f,
 
 
 	};
@@ -108,67 +55,37 @@ void Scene2::Init()
 	// Transfer vertices to OPENGL
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data), vertex_buffer_data, GL_STATIC_DRAW);
 
-	static const GLfloat color_buffer_data[]=
+	static const GLfloat color_buffer_data[] =
 	{
-		/*1.0f, 0.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,*/
 
 
 
-		
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		0.5f, 0.3f, 0.1f,
-		0.7f, 0.8f, 0.9f,
-		0.4f, 0.7f, 0.5f,
-		0.5f, 0.7f, 0.3f,
-		1.0f, 0.6f, 0.7f,
-		0.6f, 0.5f, 0.3f,
-		0.5f, 0.7f, 0.3f,
-		0.6f, 0.4f, 0.6f,
-		0.2f, 0.3f, 0.5f,
-		0.4f, 0.3f, 0.2f,
-		0.7f, 0.5f, 0.6f,
-		0.5f, 0.3f, 0.9f,
-
-		/*part 3 colour
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		0.5f, 0.3f, 0.1f,
-		0.7f, 0.8f, 0.9f,
-		0.4f, 0.7f, 0.5f,
-		0.5f, 0.7f, 0.3f,
-		1.0f, 0.6f, 0.7f,
-		0.7f, 0.8f, 0.9f,
-		0.4f, 0.7f, 0.5f,
-		0.5f, 0.7f, 0.3f,
-		1.0f, 0.6f, 0.7f,
-		0.7f, 0.8f, 0.9f,
-		0.4f, 0.7f, 0.5f,
-		0.5f, 0.3f, 0.4f,
-		1.0f, 0.3f, 0.6f,
-		0.6f, 0.4f, 0.3f,
-		0.2f, 0.4f, 0.7f,*/
-		
 	};
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_1]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data), color_buffer_data, GL_STATIC_DRAW);
 
-	//2nd triangle
+	//2nd object
 	static const GLfloat vertex_buffer_data2[] =
 	{
-		1.0f,1.0f,0.7f, //vertex 0 of triangle 
-		1.0f,0.0f,0.5f, //vertex 1 of triangle
-		-1.0f,-1.0f,0.3f, //vertex 2 of triangle
+		-0.6f,0.77f,0.0f,  
+		-0.42f,0.77f,0.0f, 
+		-0.58f,0.68f,0.0f, 
+		-0.64f,1.0f,0.0f,
+		-0.68f,0.77f,0.0f,
+		-0.60f,0.77f,0.0f,
+		-0.68f,0.77f,0.0f,
+		-0.70f,0.68f,0.0f,
+		-0.86f,0.77f,0.0f,
+		-0.64f,0.63f,0.0f,
+		-0.70f,0.68f,0.0f,
+		-0.82f,0.43f,0.0f,
+		-0.64f,0.63f,0.0f,
+		-0.58f,0.68f,0.0f,
+		-0.51f,0.43f,0.0f,
 
 	};
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_2]);
@@ -176,29 +93,249 @@ void Scene2::Init()
 
 	static const GLfloat color_buffer_data2[] =
 	{
-		0.3f, 0.6f, 0.4f, //color of vertex 0
-		0.2f, 0.9f, 0.3f, //color of vertex 1
-		0.7f, 0.2f, 0.8f, //color if vertex 2
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+
 
 	};
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_2]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data2), color_buffer_data2, GL_STATIC_DRAW);
 
-	//Load vertex and fragment shaders
-	/*m_programID = LoadShaders("Shader//SimpleVertexShader.vertexshader", "Shader//SimpleFragmentShader.fragmentshader");*/
-	// Use our shader
-	/*glUseProgram(m_programID);*/
+	//3rd object
+	static const GLfloat vertex_buffer_data3[] =
+	{
+		-0.6f,0.77f,0.0f,
+		-0.42f,0.77f,0.0f,
+		-0.58f,0.68f,0.0f,
+		-0.64f,1.0f,0.0f,
+		-0.68f,0.77f,0.0f,
+		-0.60f,0.77f,0.0f,
+		-0.68f,0.77f,0.0f,
+		-0.70f,0.68f,0.0f,
+		-0.86f,0.77f,0.0f,
+		-0.64f,0.63f,0.0f,
+		-0.70f,0.68f,0.0f,
+		-0.82f,0.43f,0.0f,
+		-0.64f,0.63f,0.0f,
+		-0.58f,0.68f,0.0f,
+		-0.51f,0.43f,0.0f,
+
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_3]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data3), vertex_buffer_data3, GL_STATIC_DRAW);
+
+	static const GLfloat color_buffer_data3[] =
+	{
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+
+
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_3]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data3), color_buffer_data3, GL_STATIC_DRAW);
+
+	//4th object
+	static const GLfloat vertex_buffer_data4[] =
+	{
+		-0.6f,0.77f,0.0f,
+		-0.42f,0.77f,0.0f,
+		-0.58f,0.68f,0.0f,
+		-0.64f,1.0f,0.0f,
+		-0.68f,0.77f,0.0f,
+		-0.60f,0.77f,0.0f,
+		-0.68f,0.77f,0.0f,
+		-0.70f,0.68f,0.0f,
+		-0.86f,0.77f,0.0f,
+		-0.64f,0.63f,0.0f,
+		-0.70f,0.68f,0.0f,
+		-0.82f,0.43f,0.0f,
+		-0.64f,0.63f,0.0f,
+		-0.58f,0.68f,0.0f,
+		-0.51f,0.43f,0.0f,
+
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_4]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data4), vertex_buffer_data4, GL_STATIC_DRAW);
+
+	static const GLfloat color_buffer_data4[] =
+	{
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+
+
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_4]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data4), color_buffer_data4, GL_STATIC_DRAW);
+
+	//5th object
+	static const GLfloat vertex_buffer_data5[] =
+	{
+		-0.6f,0.77f,0.0f,
+		-0.42f,0.77f,0.0f,
+		-0.58f,0.68f,0.0f,
+		-0.64f,1.0f,0.0f,
+		-0.68f,0.77f,0.0f,
+		-0.60f,0.77f,0.0f,
+		-0.68f,0.77f,0.0f,
+		-0.70f,0.68f,0.0f,
+		-0.86f,0.77f,0.0f,
+		-0.64f,0.63f,0.0f,
+		-0.70f,0.68f,0.0f,
+		-0.82f,0.43f,0.0f,
+		-0.64f,0.63f,0.0f,
+		-0.58f,0.68f,0.0f,
+		-0.51f,0.43f,0.0f,
+
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_5]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data5), vertex_buffer_data5, GL_STATIC_DRAW);
+
+	static const GLfloat color_buffer_data5[] =
+	{
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+
+
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_5]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data5), color_buffer_data5, GL_STATIC_DRAW);
+
+	//6th object
+	static const GLfloat vertex_buffer_data6[] =
+	{
+		0.0f,0.4f,0.0f,
+		0.1f,0.2f,0.0f,
+		-0.1f,0.2f,0.0f,
+
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_6]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data6), vertex_buffer_data6, GL_STATIC_DRAW);
+
+	static const GLfloat color_buffer_data6[] =
+	{
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+
+
+
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_6]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data6), color_buffer_data6, GL_STATIC_DRAW);
+
+	//7th object
+	static const GLfloat vertex_buffer_data7[] =
+	{
+		0.0f,0.4f,0.0f,
+		0.1f,0.2f,0.0f,
+		-0.1f,0.2f,0.0f,
+
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_7]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data7), vertex_buffer_data7, GL_STATIC_DRAW);
+
+	static const GLfloat color_buffer_data7[] =
+	{
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+
+
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_7]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data7), color_buffer_data7, GL_STATIC_DRAW);
+
+	//8th object
+	static const GLfloat vertex_buffer_data8[] =
+	{
+		0.0f,0.4f,0.0f,
+		0.1f,0.2f,0.0f,
+		-0.1f,0.2f,0.0f,
+
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_8]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data8), vertex_buffer_data8, GL_STATIC_DRAW);
+
+	static const GLfloat color_buffer_data8[] =
+	{
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+
+
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_8]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data8), color_buffer_data8, GL_STATIC_DRAW);
+
 
 
 	//Enable depth test
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Scene2::Update(double dt)
+void Scene3::Update(double dt)
 {
 	rotateAngle -= (float)(10 * dt);
-	translateX -= (float)(10 * dt);
+	translateX -= (float)(5 * dt);
 	scaleAll -= (float)(2 * dt);
 
 	if (Application::IsKeyPressed(VK_SPACE))
@@ -217,15 +354,20 @@ void Scene2::Update(double dt)
 		{
 			translateX = 8;
 		}
-			
+
 	}
 
 }
 
-void Scene2::Render()
+void Scene3::Render()
 {
-	//Creating new Matrix
+	// Render VBO here
+	// Clear color & depth buffer everty frame
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnableVertexAttribArray(0); //1st attribute buffer : vertices
+	glEnableVertexAttribArray(1); //2nd attribute buffer: colors
 
+	//Creating new Matrix
 	Mtx44 translate, rotate, scale;
 	Mtx44 model;
 	Mtx44 view;
@@ -240,18 +382,13 @@ void Scene2::Render()
 	view.SetToIdentity();
 	projection.SetToOrtho(-8, +8, -8, +8, -8, +8);
 
-	scale.SetToScale(4, 4, 4);
+	scale.SetToScale(18, 9, 18);
 	rotate.SetToRotation(rotateAngle, 0, 0, 1);
-	translate.SetToTranslation(3, translateX, 3);
+	translate.SetToTranslation(3,0, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
-	// Render VBO here
-	// Clear color & depth buffer everty frame
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnableVertexAttribArray(0); //1st attribute buffer : vertices
-	glEnableVertexAttribArray(1); //2nd attribute buffer: colors
 
 	//Render triangle
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_1]);
@@ -265,37 +402,14 @@ void Scene2::Render()
 	);
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_1]);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 30); // Draw triangle ,Strarting from vertex 0; 3 vertices = 1 triangle
-	
 
+	glDrawArrays(GL_TRIANGLES, 0, 30); // Draw triangle ,Strarting from vertex 0; 3 vertices = 1 triangle
 
-	//answer for part 2
-	//glDrawArrays(GL_TRIANGLES, 0, 15); 
-
-	//answer for part 3
-	//glDrawArrays(GL_TRIANGLES, 0, 18); 
 
 	//OBJECT 2
 	scale.SetToScale(1, 1, 1);
-	rotate.SetToRotation(135, 0, 0, 1);
-	translate.SetToTranslation(translateX, 6, 3);
-	model = translate * rotate * scale;
-	MVP = projection * view * model;
-	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_2]);
-	glVertexAttribPointer(0, 3,  GL_FLOAT,  GL_FALSE,  0,  0);
-	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_2]);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glDrawArrays(GL_TRIANGLES, 0, 15); 
-
-
-	//3rd object
-	scale.SetToScale(scaleAll, scaleAll, scaleAll);
-	rotate.SetToRotation(135, 0, 0, 1);
-	translate.SetToTranslation(0, -4, 0);
+	rotate.SetToRotation(1, 0, 0, 1);
+	translate.SetToTranslation(-translateX, 7, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -307,13 +421,106 @@ void Scene2::Render()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glDrawArrays(GL_TRIANGLES, 0, 15);
 
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1); 
 
-	
+	//3rd object
+	scale.SetToScale(1, 1, 1);
+	rotate.SetToRotation(135, 0, 0, 1);
+	translate.SetToTranslation(-translateX, 7, 0);
+	model = translate * rotate * scale;
+	MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_3]);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_3]);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 15);
+
+	//4th object
+	scale.SetToScale(1, 1, 1);
+	rotate.SetToRotation(135, 0, 0, 1);
+	translate.SetToTranslation(-translateX, 8, 0);
+	model = translate * rotate * scale;
+	MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_4]);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_4]);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 15);
+
+	//5th object
+	scale.SetToScale(1, 1, 1);
+	rotate.SetToRotation(135, 0, 0, 1);
+	translate.SetToTranslation(-translateX, 6, 0);
+	model = translate * rotate * scale;
+	MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_5]);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_5]);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 15);
+
+	//6th object
+	scale.SetToScale(8, 6, 1);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(-3, -2, 0);
+	model = translate * rotate * scale;
+	MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_6]);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_6]);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 15);
+
+	//7th object
+	scale.SetToScale(6, 6, 1);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(-3, -1, 0);
+	model = translate * rotate * scale;
+	MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_7]);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_7]);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 15);
+
+	//8th object
+	scale.SetToScale(10, 6, 1);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(-3, -3, 0);
+	model = translate * rotate * scale;
+	MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_8]);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_8]);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 15);
+
+
+
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+
+
 }
 
-void Scene2::Exit()
+void Scene3::Exit()
 {
 	// Cleanup VBO here
 	glDeleteBuffers(NUM_GEOMETRY, &m_vertexBuffer[0]);

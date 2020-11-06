@@ -201,24 +201,24 @@ void Scene2::Update(double dt)
 	translateX -= (float)(10 * dt);
 	scaleAll -= (float)(2 * dt);
 
-	if (Application::IsKeyPressed(VK_SPACE))
-	{
-		if (scaleAll >= -100)
-		{
-			scaleAll = 1;
-		}
+	//if (Application::IsKeyPressed(VK_SPACE))
+	//{
+	//	if (scaleAll >= -100)
+	//	{
+	//		scaleAll = 1;
+	//	}
 
-		if (rotateAngle >= -90)
-		{
-			rotateAngle = 1;
-		}
+	//	if (rotateAngle >= -90)
+	//	{
+	//		rotateAngle = 1;
+	//	}
 
-		if (translateX >= -100)
-		{
-			translateX = 8;
-		}
-			
-	}
+	//	if (translateX >= -100)
+	//	{
+	//		translateX = 8;
+	//	}
+	//		
+	//}
 
 }
 
