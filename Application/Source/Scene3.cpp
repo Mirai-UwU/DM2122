@@ -322,9 +322,32 @@ void Scene3::Init()
 
 
 	};
-
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_8]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data8), color_buffer_data8, GL_STATIC_DRAW);
+
+	//Christmas rectangle
+	static const GLfloat vertex_buffer_data9[] =
+	{
+		0.0f,0.4f,0.0f,
+		0.1f,0.2f,0.0f,
+		-0.1f,0.2f,0.0f,
+
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_9]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data9), vertex_buffer_data9, GL_STATIC_DRAW);
+
+	static const GLfloat color_buffer_data9[] =
+	{
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+
+
+
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_9]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data9), color_buffer_data9, GL_STATIC_DRAW);
 
 
 
@@ -336,23 +359,62 @@ void Scene3::Update(double dt)
 {
 	rotateAngle -= (float)(10 * dt);
 	translateX -= (float)(5 * dt);
+	translateA -= (float)(5 * dt);
+	translateB -= (float)(5 * dt);
+	translateC -= (float)(5 * dt);
+	translateD -= (float)(5 * dt);
 	scaleAll -= (float)(2 * dt);
+
+
+	if ((rotateDirection != -1) && (rotateAngle < 1))
+	{
+		rotateDirection = 1;
+	}
+	else if ((rotateDirection == -1) && (rotateAngle <= -1))
+	{
+		rotateDirection = 1;
+	}
+	else
+	{
+		rotateDirection = -1;
+	}
+
+	rotateAngle += (float)(rotateDirection * 25 * dt);
 
 	if (Application::IsKeyPressed(VK_SPACE))
 	{
+		if (translateX >= -100)
+		{
+			translateA = 0;
+			if (translateA >= 40)
+			{
+				translateA = 0;
+			}
+			translateB = -10;
+			if (translateB >= 40)
+			{
+				translateB = 0;
+			}
+			translateC = -30;
+			if (translateC >= 40)
+			{
+				translateC = 0;
+			}
+			translateD = 30;
+			if (translateD >= 40)
+			{
+				translateD = 0;
+			}
+		}
+		
 		if (scaleAll >= -100)
 		{
 			scaleAll = 1;
 		}
 
-		if (rotateAngle >= -90)
+		if (rotateAngle >= -180)
 		{
 			rotateAngle = 1;
-		}
-
-		if (translateX >= -100)
-		{
-			translateX = 8;
 		}
 
 	}
@@ -374,17 +436,17 @@ void Scene3::Render()
 	Mtx44 projection;
 	Mtx44 MVP;
 
-	//OBJECT 1
+	//ROOF
 	translate.SetToIdentity();
 	rotate.SetToIdentity();
 	scale.SetToIdentity();
 	model.SetToIdentity();
 	view.SetToIdentity();
-	projection.SetToOrtho(-8, +8, -8, +8, -8, +8);
+	projection.SetToOrtho(-40, +40, -40, +40, -40, +40);
 
-	scale.SetToScale(18, 9, 18);
-	rotate.SetToRotation(rotateAngle, 0, 0, 1);
-	translate.SetToTranslation(3,0, 0);
+	scale.SetToScale(80, 40, 80);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(20,0, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -406,10 +468,10 @@ void Scene3::Render()
 	glDrawArrays(GL_TRIANGLES, 0, 30); // Draw triangle ,Strarting from vertex 0; 3 vertices = 1 triangle
 
 
-	//OBJECT 2
-	scale.SetToScale(1, 1, 1);
-	rotate.SetToRotation(1, 0, 0, 1);
-	translate.SetToTranslation(-translateX, 7, 0);
+	//STARS 1
+	scale.SetToScale(10, 10, 10);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(-translateA, 20, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -422,10 +484,10 @@ void Scene3::Render()
 	glDrawArrays(GL_TRIANGLES, 0, 15);
 
 
-	//3rd object
-	scale.SetToScale(1, 1, 1);
-	rotate.SetToRotation(135, 0, 0, 1);
-	translate.SetToTranslation(-translateX, 7, 0);
+	//STARS 2
+	scale.SetToScale(10, 10, 10);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(-translateB, 18, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -437,10 +499,10 @@ void Scene3::Render()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glDrawArrays(GL_TRIANGLES, 0, 15);
 
-	//4th object
-	scale.SetToScale(1, 1, 1);
-	rotate.SetToRotation(135, 0, 0, 1);
-	translate.SetToTranslation(-translateX, 8, 0);
+	//STARS 3
+	scale.SetToScale(8, 8, 8);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(-translateC, 20, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -452,10 +514,10 @@ void Scene3::Render()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glDrawArrays(GL_TRIANGLES, 0, 15);
 
-	//5th object
-	scale.SetToScale(1, 1, 1);
-	rotate.SetToRotation(135, 0, 0, 1);
-	translate.SetToTranslation(-translateX, 6, 0);
+	//STARS 4
+	scale.SetToScale(8, 8, 8);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(-translateD, 20, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -467,25 +529,27 @@ void Scene3::Render()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glDrawArrays(GL_TRIANGLES, 0, 15);
 
-	//6th object
-	scale.SetToScale(8, 6, 1);
-	rotate.SetToRotation(0, 0, 0, 1);
-	translate.SetToTranslation(-3, -2, 0);
+	//Christmas tree triangle 1 
+	scale.SetToScale(24, 24, 4);
+	rotate.SetToRotation(rotateAngle, 0, 0, 1);
+	if (rotateAngle > 5)
+	{
+		rotateAngle = -5;
+	}
+	translate.SetToTranslation(-10, -6, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-
-
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_6]);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_6]);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glDrawArrays(GL_TRIANGLES, 0, 15);
 
-	//7th object
-	scale.SetToScale(6, 6, 1);
-	rotate.SetToRotation(0, 0, 0, 1);
-	translate.SetToTranslation(-3, -1, 0);
+	//Christmas tree triangle 2
+	scale.SetToScale(24, 24, 4);
+	rotate.SetToRotation(rotateAngle, 0, 0, 1);
+	translate.SetToTranslation(-10, -2, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -497,10 +561,10 @@ void Scene3::Render()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glDrawArrays(GL_TRIANGLES, 0, 15);
 
-	//8th object
-	scale.SetToScale(10, 6, 1);
-	rotate.SetToRotation(0, 0, 0, 1);
-	translate.SetToTranslation(-3, -3, 0);
+	//Christmas tree triangle 3
+	scale.SetToScale(35, 20, 3);
+	rotate.SetToRotation(rotateAngle, 0, 0, 1);
+	translate.SetToTranslation(-10, -9, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -516,6 +580,21 @@ void Scene3::Render()
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+
+	//Christmas tree rectangle
+	scale.SetToScale(35, 20, 3);
+	rotate.SetToRotation(rotateAngle, 0, 0, 1);
+	translate.SetToTranslation(-15, -9, 0);
+	model = translate * rotate * scale;
+	MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_9]);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_9]);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 15);
 
 
 }

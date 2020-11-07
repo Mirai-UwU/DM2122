@@ -8,7 +8,12 @@ class Scene3 : public Scene
 {
 	float rotateAngle;
 	float translateX;
+	float translateA;
+	float translateB;
+	float translateC;
+	float translateD;
 	float scaleAll;
+	int rotateDirection;
 
 
 
