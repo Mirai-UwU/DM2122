@@ -328,9 +328,12 @@ void Scene3::Init()
 	//Christmas rectangle
 	static const GLfloat vertex_buffer_data9[] =
 	{
-		0.0f,0.4f,0.0f,
-		0.1f,0.2f,0.0f,
-		-0.1f,0.2f,0.0f,
+		0.5f,0.0f,0.0f,
+		0.5f,0.5f,0.0f,
+		0.0f,0.0f,0.0f,
+		0.0f,0.0f,0.0f,
+		0.0f,0.5f,0.0f,
+		0.5f,0.5f,0.0f,
 
 	};
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_9]);
@@ -338,16 +341,106 @@ void Scene3::Init()
 
 	static const GLfloat color_buffer_data9[] =
 	{
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-
+		0.0f,0.0f,1.0f,
+		0.0f,0.0f,1.0f,
+		0.0f,0.0f,1.0f,
+		0.0f,0.0f,1.0f,
+		0.0f,0.0f,1.0f,
+		0.0f,0.0f,1.0f,
 
 
 	};
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_9]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data9), color_buffer_data9, GL_STATIC_DRAW);
+
+	//House roof rectangle
+	static const GLfloat vertex_buffer_data11[] =
+	{
+		0.5f,0.0f,0.0f,
+		0.5f,0.5f,0.0f,
+		0.0f,0.0f,0.0f,
+		0.0f,0.0f,0.0f,
+		0.0f,0.5f,0.0f,
+		0.5f,0.5f,0.0f,
+
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_11]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data11), vertex_buffer_data11, GL_STATIC_DRAW);
+
+	static const GLfloat color_buffer_data11[] =
+	{
+		0.5f, 0.5f, 0.5f,
+		0.5f, 0.5f, 0.5f,
+		0.5f, 0.5f, 0.5f,
+		0.5f, 0.5f, 0.5f,
+		0.5f, 0.5f, 0.5f,
+		0.5f, 0.5f, 0.5f,
+
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_11]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data11), color_buffer_data11, GL_STATIC_DRAW);
+
+	//House base rectangle
+	static const GLfloat vertex_buffer_data10[] =
+	{
+		0.5f,0.0f,0.0f,
+		0.5f,0.5f,0.0f,
+		0.0f,0.0f,0.0f,
+		0.0f,0.0f,0.0f,
+		0.0f,0.5f,0.0f,
+		0.5f,0.5f,0.0f,
+
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_10]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data10), vertex_buffer_data10, GL_STATIC_DRAW);
+
+	static const GLfloat color_buffer_data10[] =
+	{
+		0.1f, 0.0f, 0.0f,
+		0.1f, 0.0f, 0.0f,
+		0.1f, 0.0f, 0.0f,
+		0.1f, 0.0f, 0.0f,
+		0.1f, 0.0f, 0.0f,
+		0.1f, 0.0f, 0.0f,
+
+
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_10]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data10), color_buffer_data10, GL_STATIC_DRAW);
+
+	//River
+	static const GLfloat vertex_buffer_data12[] =
+	{
+		0.5f,0.0f,0.0f,
+		0.5f,0.5f,0.0f,
+		0.0f,0.0f,0.0f,
+		0.0f,0.0f,0.0f,
+		0.0f,0.5f,0.0f,
+		0.5f,0.5f,0.0f,
+
+
+
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_12]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data12), vertex_buffer_data12, GL_STATIC_DRAW);
+
+	static const GLfloat color_buffer_data12[] =
+	{
+		0.0f, 0.5f, 1.0f,
+		0.0f, 0.5f, 1.0f,
+		0.0f, 0.5f, 1.0f,
+		0.0f, 0.5f, 1.0f,
+		0.0f, 0.5f, 1.0f,
+		0.0f, 0.5f, 1.0f,
+
+
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_12]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data12), color_buffer_data12, GL_STATIC_DRAW);
 
 
 
@@ -357,12 +450,12 @@ void Scene3::Init()
 
 void Scene3::Update(double dt)
 {
-	rotateAngle -= (float)(10 * dt);
+	rotateAngle -= (float)(1 * dt);
 	translateX -= (float)(5 * dt);
-	translateA -= (float)(5 * dt);
-	translateB -= (float)(5 * dt);
-	translateC -= (float)(5 * dt);
-	translateD -= (float)(5 * dt);
+	translateA -= (float)(3 * dt);
+	translateB -= (float)(3 * dt);
+	translateC -= (float)(3 * dt);
+	translateD -= (float)(3 * dt);
 	scaleAll -= (float)(2 * dt);
 
 
@@ -379,7 +472,7 @@ void Scene3::Update(double dt)
 		rotateDirection = -1;
 	}
 
-	rotateAngle += (float)(rotateDirection * 25 * dt);
+	rotateAngle += (float)(rotateDirection * 10 * dt);
 
 	if (Application::IsKeyPressed(VK_SPACE))
 	{
@@ -436,7 +529,7 @@ void Scene3::Render()
 	Mtx44 projection;
 	Mtx44 MVP;
 
-	//ROOF
+
 	translate.SetToIdentity();
 	rotate.SetToIdentity();
 	scale.SetToIdentity();
@@ -444,9 +537,28 @@ void Scene3::Render()
 	view.SetToIdentity();
 	projection.SetToOrtho(-40, +40, -40, +40, -40, +40);
 
+	//River
+	scale.SetToScale(170, 40, 80);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(-40,-50, 0);
+	model = translate * rotate * scale;
+	MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_12]);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_12]);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 30);;
+
+
+
+
+	//ROOF
 	scale.SetToScale(80, 40, 80);
 	rotate.SetToRotation(0, 0, 0, 1);
-	translate.SetToTranslation(20,0, 0);
+	translate.SetToTranslation(10,0, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -578,13 +690,10 @@ void Scene3::Render()
 
 
 
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-
 	//Christmas tree rectangle
-	scale.SetToScale(35, 20, 3);
-	rotate.SetToRotation(rotateAngle, 0, 0, 1);
-	translate.SetToTranslation(-15, -9, 0);
+	scale.SetToScale(5, 10, 10);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(-11.15, -10, 0);
 	model = translate * rotate * scale;
 	MVP = projection * view * model;
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
@@ -594,9 +703,44 @@ void Scene3::Render()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_9]);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glDrawArrays(GL_TRIANGLES, 0, 15);
+	glDrawArrays(GL_TRIANGLES, 0, 6);;
 
 
+	//House rectangle2
+	scale.SetToScale(32, 25, 10);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(2, -12.5, 0);
+	model = translate * rotate * scale;
+	MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_11]);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_11]);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 6);;
+
+	//House ROOF rectangle
+	scale.SetToScale(10, 25, 10);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(13, -3, 0);
+	model = translate * rotate * scale;
+	MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_10]);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_10]);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 6);;
+
+
+
+	//Stop displaying
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 }
 
 void Scene3::Exit()
