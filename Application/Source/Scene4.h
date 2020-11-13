@@ -4,6 +4,7 @@
 
 #include "Scene.h"
 #include "Camera.h"
+#include "Mesh.h"
 
 class Scene4 : public Scene
 {
@@ -45,6 +46,15 @@ class Scene4 : public Scene
 		NUM_GEOMETRY,
 	};
 
+	enum GEOMETRY_TYPE
+	{
+		GEO_AXES,
+		GEO_QUAD,
+		GEO_CUBE,
+		NUM_GEOMETRY,
+	};
+	Mesh* meshlist[NUM_GEOMETRY];
+
 public:
 	Scene4();
 	~Scene4();
@@ -56,9 +66,12 @@ public:
 
 private:
 	unsigned m_vertexArrayID;
-	unsigned m_vertexBuffer[NUM_GEOMETRY];
+	/*unsigned m_vertexBuffer[NUM_GEOMETRY];
 	unsigned m_colorBuffer[NUM_GEOMETRY];
+	unsigned m_indexBuffer[NUM_GEOMETRY];*/
 	unsigned m_programID;
+	
+
 };
 
 

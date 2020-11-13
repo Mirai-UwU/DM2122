@@ -4,6 +4,8 @@
 
 #include "shader.hpp"
 #include <Mtx44.h>
+#include "MeshBuilder.h"
+#include "Mesh.h"
 
 
 Scene4::Scene4()
@@ -22,6 +24,10 @@ void Scene4::Init()
 
 	glEnable(GL_CULL_FACE);
 	camera.Init(Vector3(4, 3, 3), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
+	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", 1, 1);
+	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", 1, 1, 1);
+	
 
 	m_programID = LoadShaders("Shader//TransformVertexShader.vertexshader", "Shader//SimpleFragmentShader.fragmentshader");
 	// Use our shader
@@ -33,30 +39,19 @@ void Scene4::Init()
 	// Set background color to dark blue
 	glClearColor(0.2f, 0.5f, 0.4f, 0.0f);
 
-	//Generate a default VAO for now
-	glGenVertexArrays(1, &m_vertexArrayID);
-	glBindVertexArray(m_vertexArrayID);
-
-	//Generate buffers
-	glGenBuffers(NUM_GEOMETRY, &m_vertexBuffer[0]);
-	glGenBuffers(NUM_GEOMETRY, &m_colorBuffer[0]);
+	
 
 	//An array of 3 vectors which represents 3 vertices 
 	static const GLfloat vertex_buffer_data[] =
 	{
 
-		0.0f,0.2f,0.0f,
-		0.1f,0.0f,0.0f,
-		-0.1f,0.0f,0.0f,
+		0.5f,0.5f,0.0f,
+		-0.5f,0.5f,0.0f,
+		-0.5f,-0.5f,0.0f,
+		0.5f,-0.5f,0.0f,
 
 
 	};
-
-
-	//Set the current active buffer
-	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_1]);
-	// Transfer vertices to OPENGL
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data), vertex_buffer_data, GL_STATIC_DRAW);
 
 	static const GLfloat color_buffer_data[] =
 	{
@@ -68,8 +63,16 @@ void Scene4::Init()
 
 	};
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data), color_buffer_data, GL_STATIC_DRAW);
+
+	static const GLuint index_buffer_data[] =
+	{
+
+		0,1,2,0,2,3,
+	};
+
+	//Set the current active buffer
+	// Transfer vertices to OPENGL
+
 
 	
 
@@ -156,51 +159,13 @@ void Scene4::Update(double dt)
 
 void Scene4::Render()
 {
-	// Render VBO here
-	// Clear color & depth buffer everty frame
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnableVertexAttribArray(0); //1st attribute buffer : vertices
-	glEnableVertexAttribArray(1); //2nd attribute buffer: colors
-
-	//Creating new Matrix
-	Mtx44 translate, rotate, scale;
-	Mtx44 model;
-	Mtx44 view;
-	Mtx44 projection;
-	Mtx44 MVP;
-
-
-	translate.SetToIdentity();
-	rotate.SetToIdentity();
-	scale.SetToIdentity();
 	model.SetToIdentity();
-	view.SetToIdentity();
-	view.SetToLookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z,camera.up.x,camera.up.y,camera.up.z);
-	//projection.SetToOrtho(-40, +40, -40, +40, -40, +40);
-	projection.SetToPerspective(45.f, 4.f / 3, 0.1f, 1000.f);
+	Mtx44 MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameter[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+	meshList[GEO_AXES]->Render();
+	meshList[GEO_QUAD]->Render();
+	meshList[GEO_CUBE]->Render();
 
-
-
-	//Render triangle
-	scale.SetToScale(2, 2, 2);
-	rotate.SetToRotation(0, 0, 0, 1);
-	translate.SetToTranslation(-40, -50, 0);
-	model = translate * rotate * scale;
-	MVP = projection * view * model;
-	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_1]);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_1]);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glDrawArrays(GL_TRIANGLES, 0, 30);;
-
-
-
-	//Stop displaying
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
 }
 
 void Scene4::Exit()
