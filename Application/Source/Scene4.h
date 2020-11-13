@@ -3,6 +3,7 @@
 #define SCENE_4_H
 
 #include "Scene.h"
+#include "Camera.h"
 
 class Scene4 : public Scene
 {
@@ -14,6 +15,7 @@ class Scene4 : public Scene
 	float translateD;
 	float scaleAll;
 	int rotateDirection;
+	Camera camera;
 
 
 

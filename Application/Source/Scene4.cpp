@@ -20,6 +20,9 @@ void Scene4::Init()
 	translateX = 8;
 	scaleAll = 8;
 
+	glEnable(GL_CULL_FACE);
+	camera.Init(Vector3(4, 3, 3), Vector3(0, 0, 0), Vector3(0, 1, 0));
+
 	m_programID = LoadShaders("Shader//TransformVertexShader.vertexshader", "Shader//SimpleFragmentShader.fragmentshader");
 	// Use our shader
 	glUseProgram(m_programID);
@@ -76,6 +79,8 @@ void Scene4::Init()
 
 void Scene4::Update(double dt)
 {
+	camera.Update(dt);
+
 	rotateAngle -= (float)(1 * dt);
 	translateX -= (float)(5 * dt);
 	translateA -= (float)(3 * dt);
@@ -138,6 +143,15 @@ void Scene4::Update(double dt)
 
 	}
 
+	if (Application::IsKeyPressed('1'))
+		glEnable(GL_CULL_FACE);
+	if (Application::IsKeyPressed('2'))
+		glDisable(GL_CULL_FACE);
+	if (Application::IsKeyPressed('3'))
+		glEnable(GL_FILL);
+	if (Application::IsKeyPressed('4'))
+		glDisable(GL_LINE);
+
 }
 
 void Scene4::Render()
@@ -161,24 +175,26 @@ void Scene4::Render()
 	scale.SetToIdentity();
 	model.SetToIdentity();
 	view.SetToIdentity();
-	projection.SetToOrtho(-40, +40, -40, +40, -40, +40);
+	view.SetToLookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z,camera.up.x,camera.up.y,camera.up.z);
+	//projection.SetToOrtho(-40, +40, -40, +40, -40, +40);
+	projection.SetToPerspective(45.f, 4.f / 3, 0.1f, 1000.f);
 
 
 
 	//Render triangle
+	scale.SetToScale(2, 2, 2);
+	rotate.SetToRotation(0, 0, 0, 1);
+	translate.SetToTranslation(-40, -50, 0);
+	model = translate * rotate * scale;
+	MVP = projection * view * model;
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+
+
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer[GEO_TRIANGLE_1]);
-	glVertexAttribPointer(
-		0,  //attribute 0. Must match the layout in the shader. Usually 0 is for vertex
-		3,  // size
-		GL_FLOAT,  //type
-		GL_FALSE,  //normalized?
-		0,  //stride
-		0   //array buffer offset
-	);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer[GEO_TRIANGLE_1]);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	glDrawArrays(GL_TRIANGLES, 0, 30); // Draw triangle ,Strarting from vertex 0; 3 vertices = 1 triangle	
+	glDrawArrays(GL_TRIANGLES, 0, 30);;
 
 
 

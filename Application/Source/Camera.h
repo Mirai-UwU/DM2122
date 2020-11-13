@@ -10,6 +10,7 @@ public:
 	Vector3 target;
 	Vector3 up;
 
+
 	Camera();
 	~Camera();
 	void Init(const Vector3& pos, const Vector3& target, const Vector3& up);
