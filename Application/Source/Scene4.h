@@ -1,10 +1,10 @@
 #pragma once
-#ifndef SCENE_3_H
-#define SCENE_3_H
+#ifndef SCENE_4_H
+#define SCENE_4_H
 
 #include "Scene.h"
 
-class Scene3 : public Scene
+class Scene4 : public Scene
 {
 	float rotateAngle;
 	float translateX;
@@ -44,8 +44,8 @@ class Scene3 : public Scene
 	};
 
 public:
-	Scene3();
-	~Scene3();
+	Scene4();
+	~Scene4();
 
 	virtual void Init();
 	virtual void Update(double dt);
