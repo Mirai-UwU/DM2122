@@ -3,33 +3,23 @@
 #include "GL\glew.h"
 #include "Vertex.h"
 
-/******************************************************************************/
-/*!
-\brief
-Default constructor - generate VBO/IBO here
 
-\param meshName - name of mesh
-*/
-/******************************************************************************/
 Mesh::Mesh(const std::string& meshName)
 	: name(meshName)
 	, mode(DRAW_TRIANGLES)
 {
-	glGenBuffers(NUM_GEOMETRY, &m_vertexBuffer[0]);
-	glGenBuffers(NUM_GEOMETRY, &m_colorBuffer[0]);
-	glGenBuffers(NUM_GEOMETRY, &m_indexBuffer[0]);
+	//Generate Buffers
+	glGenBuffers(1, &vertexBuffer);
+	//glGenBuffers(1, &colorBuffer);
+	glGenBuffers(1, &indexBuffer);
 }
 
-/******************************************************************************/
-/*!
-\brief
-Destructor - delete VBO/IBO here
-*/
-/******************************************************************************/
+
 Mesh::~Mesh()
 {
+	// Cleanup VBO here
 	glDeleteBuffers(1, &vertexBuffer);
-	/*glDeleteBuffers(1, &colorBuffer);*/
+	//glDeleteBuffers(1, &colorBuffer);
 	glDeleteBuffers(1, &indexBuffer);
 }
 
@@ -43,13 +33,13 @@ void Mesh::Render()
 	//glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Position));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-
 	if (mode == DRAW_LINES)
 		glDrawElements(GL_LINES, indexSize, GL_UNSIGNED_INT, 0);
-	else if (mode == DRAW_TRIANGLE_STRIP)
+	else if(mode == DRAW_TRIANGLE_STRIP)
 		glDrawElements(GL_TRIANGLE_STRIP, indexSize, GL_UNSIGNED_INT, 0);
 	else
 		glDrawElements(GL_TRIANGLES, indexSize, GL_UNSIGNED_INT, 0);
+		
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);

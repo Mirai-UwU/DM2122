@@ -1,35 +1,15 @@
 #include "Camera.h"
-
-/******************************************************************************/
-/*!
-\brief
-Default constructor
-*/
-/******************************************************************************/
+#include "Application.h"
 Camera::Camera()
 {
 }
 
-/******************************************************************************/
-/*!
-\brief
-Destructor
-*/
-/******************************************************************************/
+
 Camera::~Camera()
 {
 }
 
-/******************************************************************************/
-/*!
-\brief
-Initialize camera
 
-\param pos - position of camera
-\param target - where the camera is looking at
-\param up - up vector of camera
-*/
-/******************************************************************************/
 void Camera::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 {
 	this->position = pos;
@@ -37,24 +17,20 @@ void Camera::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	this->up = up;
 }
 
-/******************************************************************************/
-/*!
-\brief
-Reset the camera settings
-*/
-/******************************************************************************/
+
 void Camera::Reset()
 {
 }
 
-/******************************************************************************/
-/*!
-\brief
-To be called every frame. Camera will get user inputs and update its position and orientation
-
-\param dt - frame time
-*/
-/******************************************************************************/
 void Camera::Update(double dt)
 {
+	static float CAMERA_SPEED = 10.0f;
+	if (Application::IsKeyPressed('W'))
+		this->position.y += CAMERA_SPEED * static_cast<float>(dt);
+	else if (Application::IsKeyPressed('A'))
+		this->position.x += CAMERA_SPEED * static_cast<float>(dt);
+	if (Application::IsKeyPressed('S'))
+		this->position.y += CAMERA_SPEED * static_cast<float>(dt);
+	else if (Application::IsKeyPressed('D'))
+		this->position.x += CAMERA_SPEED * static_cast<float>(dt);
 }

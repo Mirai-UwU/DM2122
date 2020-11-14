@@ -26,7 +26,7 @@ public:
 	const std::string name;
 	DRAW_MODE mode;
 	unsigned vertexBuffer;
-	//unsigned colorBuffer;
+	/*unsigned colorBuffer;*/
 	unsigned indexBuffer;
 	unsigned indexSize;
 };
