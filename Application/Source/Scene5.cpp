@@ -6,6 +6,7 @@
 #include <Mtx44.h>
 #include "MeshBuilder.h"
 #include "Mesh.h"
+#include <vector>
 
 
 Scene5::Scene5()
@@ -30,7 +31,8 @@ void Scene5::Init()
 	glEnable(GL_CULL_FACE);
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
 	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0.5f,0.8f,0.4f), 1.0f);
-	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", 1, 1, 1);
+	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(0.5f,0.2f,0.0f), 1);
+	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("Sphere", Color(0.0f, 0.0f, 0.3f), 16, 24,1);
 	
 
 	m_programID = LoadShaders("Shader//TransformVertexShader.vertexshader", "Shader//SimpleFragmentShader.fragmentshader");
@@ -47,7 +49,7 @@ void Scene5::Init()
 	glBindVertexArray(m_vertexArrayID);
 
 
-	camera.Init(Vector3(4, 3, 3), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(40, 30, 30), Vector3(0, 0, 0), Vector3(0, 1, 0));
 	
 
 	//Enable depth test
@@ -110,22 +112,43 @@ void Scene5::Render()
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 	meshList[GEO_AXES]->Render();
 
+	//	//1st object
+	//	modelStack.PushMatrix();
+	//	modelStack.Translate(2, 0, 0);
+	//	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
+	//	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+	//	meshList[GEO_CUBE]->Render();
+	//	modelStack.PopMatrix();
+	//
+	//	//2nd object
+	//	modelStack.PushMatrix();
+	//	modelStack.Translate(-2, 0, 0);
+	//	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
+	//	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+	//	meshList[GEO_CUBE]->Render();
+	//	modelStack.PopMatrix();
+	
+	//Solar System
 	modelStack.PushMatrix();
-	modelStack.Translate(2, 0, 0);
+
+	//Planet 1
+	modelStack.PushMatrix();
+	modelStack.Rotate(rotateAngle, 1, 3, 3); //revolution
+	modelStack.Translate(20, 0, 0);
+	modelStack.Rotate(rotateAngle, 1, 3, 3); //rotation
+	modelStack.Scale(3, 3, 3);
+	modelStack.PopMatrix();
+
+	modelStack.Rotate(30, 1, 0, 0);
+	modelStack.Scale(10, 10, 10);
 	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-	meshList[GEO_CUBE]->Render();
-
+	meshList[GEO_SPHERE]->Render();
 	modelStack.PopMatrix();
-	modelStack.PushMatrix();
 
-	modelStack.Translate(-2, 0, 0);
-	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
-	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-	meshList[GEO_CUBE]->Render();
-
-	modelStack.PopMatrix();
 }
+
+
 
 
 

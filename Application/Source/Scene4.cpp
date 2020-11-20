@@ -25,7 +25,7 @@ void Scene4::Init()
 	glEnable(GL_CULL_FACE);
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
 	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0.5f,0.8f,0.4f), 1.0f);
-	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", 1, 1, 1);
+	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", 1, 1);
 	
 
 	m_programID = LoadShaders("Shader//TransformVertexShader.vertexshader", "Shader//SimpleFragmentShader.fragmentshader");

@@ -17,6 +17,7 @@ class Scene5 : public Scene {
         GEO_AXES,
         GEO_QUAD,
         GEO_CUBE,
+        GEO_SPHERE,
         NUM_GEOMETRY,
     };
 
