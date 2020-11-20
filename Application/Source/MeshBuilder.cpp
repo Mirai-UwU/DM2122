@@ -35,12 +35,6 @@ Mesh* MeshBuilder::GenerateQuad(const std::string& meshName, Color color, float 
 	return mesh;
 }
 
-
-void Mesh::Render()
-{
-
-}
-
 Mesh* MeshBuilder::GenerateCube(const std::string &meshName, float lengthX, float lengthY, float lengthZ)
 {
 	const GLfloat vertex_buffer_data[] = {
@@ -56,3 +50,4 @@ Mesh* MeshBuilder::GenerateCube(const std::string &meshName, float lengthX, floa
 
 	return mesh;
 }
+
