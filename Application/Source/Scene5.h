@@ -1,11 +1,12 @@
-#ifndef SCENE_4_H
-#define SCENE_4_H
+#ifndef SCENE_5_H
+#define SCENE_5_H
 
 #include "Scene.h"
 #include "Camera.h"
 #include "Mesh.h"
+#include "MatrixStack.h"
 
-class Scene4 : public Scene {
+class Scene5 : public Scene {
 
     enum UNIFORM_TYPE {
         U_MVP = 0,
@@ -20,8 +21,8 @@ class Scene4 : public Scene {
     };
 
 public:
-    Scene4();
-    ~Scene4();
+    Scene5();
+    ~Scene5();
 
     virtual void Init();
     virtual void Update(double dt);
@@ -36,6 +37,7 @@ private:
 
     Camera camera;
     Mesh* meshList[NUM_GEOMETRY];
+    MS modelStack, viewStack, projectionStack;
     unsigned m_vertexArrayID;
     unsigned m_parameters[U_TOTAL];
     unsigned m_programID;

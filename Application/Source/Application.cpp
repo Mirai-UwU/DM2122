@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "Scene4.h"
+#include "Scene5.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -103,14 +103,14 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	Scene4 *scene4 = new Scene4();
-	scene4->Init();
+	Scene *scene = new Scene5();
+	scene->Init();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
-		scene4->Update(m_timer.getElapsedTime());
-		scene4->Render();
+		scene->Update(m_timer.getElapsedTime());
+		scene->Render();
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
@@ -118,8 +118,8 @@ void Application::Run()
         m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.   
 
 	} //Check if the ESC key had been pressed or if the window had been closed
-	scene4->Exit();
-	delete scene4;
+	scene->Exit();
+	delete scene;
 }
 
 void Application::Exit()

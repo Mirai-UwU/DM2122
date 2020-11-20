@@ -1,4 +1,4 @@
-#include "Scene4.h"
+#include "Scene5.h"
 #include "GL\glew.h"
 #include "Application.h"
 
@@ -8,19 +8,24 @@
 #include "Mesh.h"
 
 
-Scene4::Scene4()
+Scene5::Scene5()
 {
 }
 
-Scene4::~Scene4()
+Scene5::~Scene5()
 {
 }
 
-void Scene4::Init()
+void Scene5::Init()
 {
 	rotateAngle = 0;
 	translateX = 8;
 	scaleAll = 8;
+
+	Mtx44 projection;
+	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
+	projectionStack.LoadMatrix(projection);
+
 
 	glEnable(GL_CULL_FACE);
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
@@ -49,7 +54,7 @@ void Scene4::Init()
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Scene4::Update(double dt)
+void Scene5::Update(double dt)
 {
 	camera.Update(dt);
 
@@ -88,41 +93,45 @@ void Scene4::Update(double dt)
 
 }
 
-void Scene4::Render() {
-
+void Scene5::Render()
+{
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Mtx44 translate, rotate, scale;
-	Mtx44 model;
-	Mtx44 view;
-	Mtx44 projection;
 	Mtx44 MVP;
-
-	translate.SetToIdentity();
-	rotate.SetToIdentity();
-	scale.SetToIdentity();
-	model.SetToIdentity();
-	view.SetToLookAt(
+	viewStack.LoadIdentity(); //no need camera for now, set it at World's origin
+	viewStack.LookAt(
 		camera.position.x, camera.position.y, camera.position.z,
 		camera.target.x, camera.target.y, camera.target.z,
 		camera.up.x, camera.up.y, camera.up.z
 	);
-	// projection.SetToOrtho(-10, 10, -10, 10, -10, 10); //Our world is a cube defined by these boundaries
+	modelStack.LoadIdentity();
 
-	projection.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 1000.0f); //FOV, Aspect Ratio, Near plane, Far plane
+	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+	meshList[GEO_AXES]->Render();
 
-	// triangle 1
-	scale.SetToScale(2, 2, 2);
-	rotate.SetToRotation(rotateAngle, 0, 1, 0);
-	translate.SetToTranslation(0, 0, 0);
-	model = translate * rotate * scale; //scale, followed by rotate, then lastly translate
-	MVP = projection * view * model; // Remember, matrix multiplication is the other way around
-	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]); //update the shader with new MVP
-	meshList[GEO_QUAD]->Render();
+	modelStack.PushMatrix();
+	modelStack.Translate(2, 0, 0);
+	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+	meshList[GEO_CUBE]->Render();
 
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+
+	modelStack.Translate(-2, 0, 0);
+	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+	meshList[GEO_CUBE]->Render();
+
+	modelStack.PopMatrix();
 }
 
-void Scene4::Exit()
+
+
+
+
+void Scene5::Exit()
 {
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
