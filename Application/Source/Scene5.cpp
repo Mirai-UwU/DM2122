@@ -32,7 +32,7 @@ void Scene5::Init()
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
 	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0.5f,0.8f,0.4f), 1.0f);
 	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(0.5f,0.2f,0.0f), 1);
-	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("Sphere", Color(0.0f, 0.0f, 0.3f), 16, 24,1);
+	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("Sphere", Color(0.0f, 0.0f, 0.8f), 16, 24,1);
 	
 
 	m_programID = LoadShaders("Shader//TransformVertexShader.vertexshader", "Shader//SimpleFragmentShader.fragmentshader");
