@@ -2,7 +2,7 @@
 #define SCENE_5_H
 
 #include "Scene.h"
-#include "Camera.h"
+#include "Camera2.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
 
@@ -36,7 +36,7 @@ private:
     float translateX;
     float scaleAll;
 
-    Camera camera;
+    Camera2 camera;
     Mesh* meshList[NUM_GEOMETRY];
     MS modelStack, viewStack, projectionStack;
     unsigned m_vertexArrayID;
