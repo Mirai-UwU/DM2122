@@ -2,6 +2,7 @@
 #define MESH_H
 
 #include <string>
+#include "Material.h"
 
 /******************************************************************************/
 /*!
@@ -29,6 +30,7 @@ public:
 	/*unsigned colorBuffer;*/
 	unsigned indexBuffer;
 	unsigned indexSize;
+	Material material;
 };
 
 #endif

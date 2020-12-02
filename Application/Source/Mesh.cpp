@@ -39,7 +39,10 @@ void Mesh::Render()
 		glDrawElements(GL_TRIANGLE_STRIP, indexSize, GL_UNSIGNED_INT, 0);
 	else
 		glDrawElements(GL_TRIANGLES, indexSize, GL_UNSIGNED_INT, 0);
-		
+	
+	glEnableVertexAttribArray(2); // 3rd attribute : normals
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Position) + sizeof(Color)));
+	glDisableVertexAttribArray(2);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
