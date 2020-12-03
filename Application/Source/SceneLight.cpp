@@ -67,7 +67,7 @@ void SceneLight::Init()
 
 	light[0].position.Set(0, 20, 0);
 	light[0].color.Set(1, 1, 1);
-	light[0].power = 1;
+	light[0].power = 10;
 	light[0].kC = 1.f;
 	light[0].kL = 0.01f;
 	light[0].kQ = 0.001f;
@@ -79,7 +79,7 @@ void SceneLight::Init()
 	glUniform1f(m_parameters[U_LIGHT0_KQ], light[0].kQ);
 
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
-	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0.5f, 0.8f, 0.4f), 1.0f);
+	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1.f, 0.0f, 0.0f), 1.0f);
 	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(0.5f, 0.2f, 0.0f), 1);
 	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("Sphere", Color(0.5, 0.5, 0.5), 10, 10, 10);
 	meshList[GEO_SPHERE]->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
@@ -160,6 +160,8 @@ void SceneLight::Render()
 	modelStack.LoadIdentity();
 
 	RenderMesh(meshList[GEO_AXES], false);
+	Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
+	glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(light[0].position.x, light[0].position.y, light[0].position.z);
@@ -195,7 +197,7 @@ void SceneLight::Render()
 		//modelStack.PopMatrix();
 	
 	//Solar System
-	modelStack.PushMatrix();
+	/*modelStack.PushMatrix();*/
 
 	//Planet 1
 	modelStack.PushMatrix();
@@ -203,7 +205,7 @@ void SceneLight::Render()
 	modelStack.Translate(0, 0, 0);
 	modelStack.Rotate(rotateAngle, 1, 3, 3); //rotation
 	modelStack.Scale(0.5, 0.5, 0.5);
-	RenderMesh(meshList[GEO_SPHERE], false);
+	RenderMesh(meshList[GEO_SPHERE], true);
 	modelStack.PopMatrix();
 
 	/*modelStack.PushMatrix();
@@ -214,8 +216,7 @@ void SceneLight::Render()
 	meshList[GEO_SPHERE]->Render();
 	modelStack.PopMatrix();*/
 
-	Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
-	glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
+	
 
 }
 

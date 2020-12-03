@@ -74,10 +74,10 @@ Mesh* MeshBuilder::GenerateQuad(const std::string &meshName, Color color, float 
 	std::vector<Vertex> vertex_buffer_data;
 	std::vector<GLuint> index_buffer_data;
 
-	v.pos.Set(0.5f * length, 0.5f * length, 0.f);	v.normal.Set(0, 0, 1);	vertex_buffer_data.push_back(v); //v0
-	v.pos.Set(-0.5f * length, 0.5f * length, 0.f);	v.normal.Set(0, 0, 1);	vertex_buffer_data.push_back(v); //v1
-	v.pos.Set(-0.5f * length, -0.5f * length, 0.f); v.normal.Set(0, 0, 1);	vertex_buffer_data.push_back(v); //v2
-	v.pos.Set(0.5f * length, -0.5f * length, 0.f);	v.normal.Set(0, 0, 1);	vertex_buffer_data.push_back(v); //v3
+	v.pos.Set(0.5f * length, 0.5f * length, 0.f);	v.normal.Set(0, 0, -1);	vertex_buffer_data.push_back(v); //v0
+	v.pos.Set(-0.5f * length, 0.5f * length, 0.f);	v.normal.Set(0, 0, -1);	vertex_buffer_data.push_back(v); //v1
+	v.pos.Set(-0.5f * length, -0.5f * length, 0.f); v.normal.Set(0, 0, -1);	vertex_buffer_data.push_back(v); //v2
+	v.pos.Set(0.5f * length, -0.5f * length, 0.f);	v.normal.Set(0, 0, -1);	vertex_buffer_data.push_back(v); //v3
 
 	//tri1
 	index_buffer_data.push_back(0);
