@@ -194,12 +194,9 @@ void SceneLight2::Update(double dt)
 	}
 	else if (Application::IsKeyPressed('6'))
 	{
-		if (light[0].type == Light::LIGHT_DIRECTIONAL)
-		{
-			Vector3 lightDir(light[0].position.x, light[0].position.y, light[0].position.z);
-			Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
-			glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightDirection_cameraspace.x);
-		}
+		light[0].type = Light::LIGHT_POINT;
+		glUniform1i(m_parameters[U_LIGHT0_TYPE], light[0].type);
+
 	}
 	else if (Application::IsKeyPressed('7'))
 	{
@@ -428,6 +425,13 @@ void SceneLight2::RenderMesh(Mesh* mesh, bool enableLight)
 	else
 	{
 		glUniform1i(m_parameters[U_LIGHTENABLED], 0);
+	}
+
+	if (light[0].type == Light::LIGHT_DIRECTIONAL)
+	{
+		Vector3 lightDir(light[0].position.x, light[0].position.y, light[0].position.z);
+		Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
+		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightDirection_cameraspace.x);
 	}
 
 	mesh->Render();
