@@ -79,13 +79,53 @@ void SceneLight::Init()
 	glUniform1f(m_parameters[U_LIGHT0_KQ], light[0].kQ);
 
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
-	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(0.5f, 0.8f, 0.4f), 1.0f);
+	meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1.f, 0.0f, 0.0f), 1.0f);
 	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(0.5f, 0.2f, 0.0f), 1);
 	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("Sphere", Color(0.5, 0.5, 0.5), 10, 10, 10);
 	meshList[GEO_SPHERE]->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
 	meshList[GEO_SPHERE]->material.kDiffuse.Set(0.6f, 0.6f, 0.6f);
 	meshList[GEO_SPHERE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
 	meshList[GEO_SPHERE]->material.kShininess = 1.f;
+	meshList[GEO_SPHERE1] = MeshBuilder::GenerateSphere("Sphere1", Color(0.0, 0.0, 1.0), 10, 10, 10);
+	meshList[GEO_SPHERE1]->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	meshList[GEO_SPHERE1]->material.kDiffuse.Set(0.6f, 0.6f, 0.6f);
+	meshList[GEO_SPHERE1]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+	meshList[GEO_SPHERE1]->material.kShininess = 1.f;
+	meshList[GEO_SPHERE2] = MeshBuilder::GenerateSphere("Sphere2", Color(1.0, 0.0, 1.0), 10, 10, 10);
+	meshList[GEO_SPHERE2]->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	meshList[GEO_SPHERE2]->material.kDiffuse.Set(0.6f, 0.6f, 0.6f);
+	meshList[GEO_SPHERE2]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+	meshList[GEO_SPHERE2]->material.kShininess = 1.f;
+	meshList[GEO_SPHERE3] = MeshBuilder::GenerateSphere("Sphere3", Color(0.0, 0.5, 1.0), 10, 10, 10);
+	meshList[GEO_SPHERE3]->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	meshList[GEO_SPHERE3]->material.kDiffuse.Set(0.6f, 0.6f, 0.6f);
+	meshList[GEO_SPHERE3]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+	meshList[GEO_SPHERE3]->material.kShininess = 1.f;
+	meshList[GEO_SPHERE4] = MeshBuilder::GenerateSphere("Sphere4", Color(1.0, 0.0, 0.0), 10, 10, 10);
+	meshList[GEO_SPHERE4]->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	meshList[GEO_SPHERE4]->material.kDiffuse.Set(0.6f, 0.6f, 0.6f);
+	meshList[GEO_SPHERE4]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+	meshList[GEO_SPHERE4]->material.kShininess = 1.f;
+	meshList[GEO_SPHERE5] = MeshBuilder::GenerateSphere("Sphere5", Color(0.0, 1.0, 0.0), 10, 10, 10);
+	meshList[GEO_SPHERE5]->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	meshList[GEO_SPHERE5]->material.kDiffuse.Set(0.6f, 0.6f, 0.6f);
+	meshList[GEO_SPHERE5]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+	meshList[GEO_SPHERE5]->material.kShininess = 1.f;
+	meshList[GEO_SPHERE6] = MeshBuilder::GenerateSphere("Sphere6", Color(1.0, 1.0, 0.0), 10, 10, 10);
+	meshList[GEO_SPHERE6]->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	meshList[GEO_SPHERE6]->material.kDiffuse.Set(0.6f, 0.6f, 0.6f);
+	meshList[GEO_SPHERE6]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+	meshList[GEO_SPHERE6]->material.kShininess = 1.f;
+	meshList[GEO_SPHERE7] = MeshBuilder::GenerateSphere("Sphere7", Color(0.1, 0.0, 0.0), 10, 10, 10);
+	meshList[GEO_SPHERE7]->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	meshList[GEO_SPHERE7]->material.kDiffuse.Set(0.6f, 0.6f, 0.6f);
+	meshList[GEO_SPHERE7]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+	meshList[GEO_SPHERE7]->material.kShininess = 1.f;
+	meshList[GEO_SPHERE8] = MeshBuilder::GenerateSphere("Sphere8", Color(0.5, 0.5, 0.5), 10, 10, 10);
+	meshList[GEO_SPHERE8]->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	meshList[GEO_SPHERE8]->material.kDiffuse.Set(0.6f, 0.6f, 0.6f);
+	meshList[GEO_SPHERE8]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+	meshList[GEO_SPHERE8]->material.kShininess = 1.f;
 	meshList[GEO_LIGHTBALL] = MeshBuilder::GenerateSphere("Lightball", Color(1, 1, 1), 10, 10, 10);
 
 
@@ -161,6 +201,8 @@ void SceneLight::Render()
 	modelStack.LoadIdentity();
 
 	RenderMesh(meshList[GEO_AXES], false);
+	Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
+	glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(light[0].position.x, light[0].position.y, light[0].position.z);
@@ -196,15 +238,81 @@ void SceneLight::Render()
 		//modelStack.PopMatrix();
 	
 	//Solar System
-	modelStack.PushMatrix();
+	/*modelStack.PushMatrix();*/
 
-	//Planet 1
+	//Row 1 1st planet 
+	modelStack.PushMatrix();
+	modelStack.Rotate(0, 1, 3, 3);
+	modelStack.Translate(-10, 0, 0);
+	modelStack.Scale(0.5, 0.5, 0.5);
+	RenderMesh(meshList[GEO_SPHERE8], true);
+	modelStack.PopMatrix();
+
+
+	//Row 1 2nd planet (MAIN PLANET IS THIS)
 	modelStack.PushMatrix();
 	modelStack.Rotate(rotateAngle, 1, 3, 3); //revolution
 	modelStack.Translate(0, 0, 0);
 	modelStack.Rotate(rotateAngle, 1, 3, 3); //rotation
 	modelStack.Scale(0.5, 0.5, 0.5);
-	RenderMesh(meshList[GEO_SPHERE], false);
+	RenderMesh(meshList[GEO_SPHERE], true);
+	modelStack.PopMatrix();
+
+	//Row 1 3rd planet
+	modelStack.PushMatrix();
+	modelStack.Rotate(0, 1, 3, 3); 
+	modelStack.Translate(10, 0, 0);
+	modelStack.Scale(0.5, 0.5, 0.5);
+	RenderMesh(meshList[GEO_SPHERE1], true);
+	modelStack.PopMatrix();
+
+	//Row 2 1st planet
+	modelStack.PushMatrix();
+	modelStack.Rotate(0, 1, 3, 3);
+	modelStack.Translate(-10, 0, 10);
+	modelStack.Scale(0.5, 0.5, 0.5);
+	RenderMesh(meshList[GEO_SPHERE4], true);
+	modelStack.PopMatrix();
+
+	//Rowa 2 2nd planet
+	modelStack.PushMatrix();
+	modelStack.Rotate(0, 1, 3, 3);
+	modelStack.Translate(0, 0, 10);
+	modelStack.Scale(0.5, 0.5, 0.5);
+	RenderMesh(meshList[GEO_SPHERE3], true);
+	modelStack.PopMatrix();
+
+	//Row 2 3rd planet
+	modelStack.PushMatrix();
+	modelStack.Rotate(0, 1, 3, 3);
+	modelStack.Translate(10, 0, 10);
+	modelStack.Scale(0.5, 0.5, 0.5);
+	RenderMesh(meshList[GEO_SPHERE2], true);
+	modelStack.PopMatrix();
+
+
+	//Row 3 1st planet
+	modelStack.PushMatrix();
+	modelStack.Rotate(0, 1, 3, 3);
+	modelStack.Translate(-10, 0, 20);
+	modelStack.Scale(0.5, 0.5, 0.5);
+	RenderMesh(meshList[GEO_SPHERE5], true);
+	modelStack.PopMatrix();
+
+	//Row 3 2nd planet
+	modelStack.PushMatrix();
+	modelStack.Rotate(0, 1, 3, 3);
+	modelStack.Translate(0, 0, 20);
+	modelStack.Scale(0.5, 0.5, 0.5);
+	RenderMesh(meshList[GEO_SPHERE6], true);
+	modelStack.PopMatrix();
+
+	//Row 3 3rd planet
+	modelStack.PushMatrix();
+	modelStack.Rotate(0, 1, 3, 3);
+	modelStack.Translate(10, 0, 20);
+	modelStack.Scale(0.5, 0.5, 0.5);
+	RenderMesh(meshList[GEO_SPHERE7], true);
 	modelStack.PopMatrix();
 
 	/*modelStack.PushMatrix();
@@ -215,8 +323,7 @@ void SceneLight::Render()
 	meshList[GEO_SPHERE]->Render();
 	modelStack.PopMatrix();*/
 
-	Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
-	glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
+	
 
 }
 

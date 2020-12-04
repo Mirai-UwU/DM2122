@@ -74,10 +74,10 @@ Mesh* MeshBuilder::GenerateQuad(const std::string &meshName, Color color, float 
 	std::vector<Vertex> vertex_buffer_data;
 	std::vector<GLuint> index_buffer_data;
 
-	v.pos.Set(0.5f * length, 0.5f * length, 0.f);	v.normal.Set(0, 0, 1);	vertex_buffer_data.push_back(v); //v0
-	v.pos.Set(-0.5f * length, 0.5f * length, 0.f);	v.normal.Set(0, 0, 1);	vertex_buffer_data.push_back(v); //v1
-	v.pos.Set(-0.5f * length, -0.5f * length, 0.f); v.normal.Set(0, 0, 1);	vertex_buffer_data.push_back(v); //v2
-	v.pos.Set(0.5f * length, -0.5f * length, 0.f);	v.normal.Set(0, 0, 1);	vertex_buffer_data.push_back(v); //v3
+	v.pos.Set(0.5f * length, 0.5f * length, 0.f);	v.normal.Set(0, 0, -1);	vertex_buffer_data.push_back(v); //v0
+	v.pos.Set(-0.5f * length, 0.5f * length, 0.f);	v.normal.Set(0, 0, -1);	vertex_buffer_data.push_back(v); //v1
+	v.pos.Set(-0.5f * length, -0.5f * length, 0.f); v.normal.Set(0, 0, -1);	vertex_buffer_data.push_back(v); //v2
+	v.pos.Set(0.5f * length, -0.5f * length, 0.f);	v.normal.Set(0, 0, -1);	vertex_buffer_data.push_back(v); //v3
 
 	//tri1
 	index_buffer_data.push_back(0);
@@ -238,14 +238,15 @@ Mesh* MeshBuilder::GenerateSphere(const std::string& meshName, Color color, unsi
 	float degreePerStack = 180.f / numStack;
 	float degreePerSlice = 360.f / numSlice;
 
-	for (unsigned stack = 0; stack < numStack + 1; ++stack) //stack //replace with 180 for sphere
+	for (unsigned stack = 0; stack < numStack + 1; ++stack)
 	{
-		float phi = -90.f + stack * degreePerStack;
-		for (unsigned slice = 0; slice < numSlice + 1; ++slice) //slice
+		float phi = -90 + stack * degreePerStack;
+		for (unsigned slice = 0; slice < numSlice + 1; ++slice)
 		{
 			float theta = slice * degreePerSlice;
 			v.pos.Set(radius * sphereX(phi, theta), radius * sphereY(phi, theta), radius * sphereZ(phi, theta));
-			v.normal.Set(sphereX(phi, theta), sphereY(phi, theta), sphereZ(phi, theta));
+			v.color = color;
+			v.normal.Set(1 * sphereX(phi, theta), 1 * sphereY(phi, theta), 1 * sphereZ(phi, theta));
 			vertex_buffer_data.push_back(v);
 		}
 	}
@@ -257,7 +258,6 @@ Mesh* MeshBuilder::GenerateSphere(const std::string& meshName, Color color, unsi
 			index_buffer_data.push_back((numSlice + 1) * (stack + 1) + slice + 0);
 		}
 	}
-
 	Mesh* mesh = new Mesh(meshName);
 
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
