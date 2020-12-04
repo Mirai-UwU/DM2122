@@ -185,6 +185,7 @@ void SceneLight::Update(double dt)
 	if (Application::IsKeyPressed('P'))
 		light[0].position.y += (float)(LSPEED * dt);
 
+
 }
 
 void SceneLight::Render()
